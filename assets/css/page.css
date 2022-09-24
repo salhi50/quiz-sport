@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
+
+html{
+  scroll-behavior: smooth;
+  font-size: 100%;
+}
+/* body */
+
+body {
+  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: #111518;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: 400;
+  font-family: 'Noto Sans Arabic', sans-serif !important;
+}

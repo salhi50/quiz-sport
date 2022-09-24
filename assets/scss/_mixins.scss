@@ -1,0 +1,236 @@
+/* mixins list */
+
+// media queries
+// 
+@mixin media($type) {
+    // mobile screes
+    @if $type == 'mobile' {
+        @media screen and (max-width: 768px) {
+            @content;
+        }
+    }
+    // tablet and small screens
+    @else if $type == 'small' {
+        @media screen and (min-width: 768px) {
+            @content;
+        }
+    }
+    // medium screens
+    @else if $type == 'medium' {
+        @media screen and (min-width: 992px) {
+            @content;
+        }
+    }
+    // large
+    @else if $type == 'large' {
+        @media screen and (min-width: 1200px) {
+            @content;
+        }
+    }
+    // x-large
+    @else if $type == 'x-large' {
+        @media screen and (min-width: 1400px) {
+            @content;
+        }
+    }
+    @else if $type == 'x-mobile' {
+        @media screen and (max-width: 400px) {
+            @content;
+        }
+    }
+}
+
+// hover info
+// 
+@mixin hoverInfo(
+    // popup variables
+    // 
+    $pop--position,
+    $pop--text-size,
+    $pop--pd-x,
+    $pop--pd-y,
+    $pop-bg,
+    $pop-color,
+    $pop-rad,
+    $pop--gap,
+    // border variables
+    // 
+    $border--size
+) {
+    // default properties
+    // 
+    background-color: $pop-bg;
+    color: $pop-color;
+    padding: $pop--pd-y $pop--pd-x;
+    border-radius: $pop-rad;
+    font-size: $pop--text-size;
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    // make the first letter capital
+    // 
+    &::first-letter{
+        text-transform: capitalize;
+    }
+
+// top position condition
+// 
+@if $pop--position == 'top' {
+    top: $pop--gap;
+    transform: translateX(-50%) translateY(-100%);
+    left: 50%;
+    &::before{
+        position: absolute;
+        border: {
+            top: $border--size solid $pop-bg;
+            left: $border--size solid transparent;
+            right: $border--size solid transparent;
+            bottom: $border--size solid transparent;
+        };
+        bottom: $border--size * -1;
+        left: 50%;
+        transform: translateX(-50%);
+        content: '';
+        margin-bottom: $border--size * -1;
+    }
+}
+// bottom position condition
+// 
+@else if $pop--position == 'bottom' {
+    // transform property
+    // 
+    bottom: $pop--gap;
+    transform: translateX(-50%) translateY(100%);
+    left: 50%;
+    // before 
+    // 
+    &::before{
+        position: absolute;
+        border: {
+            top: $border--size solid transparent;
+            left: $border--size solid transparent;
+            right: $border--size solid transparent;
+            bottom: $border--size solid $pop-bg;
+        };
+        top: $border--size * -1;
+        left: 50%;
+        transform: translateX(-50%);
+        content: '';
+        margin-top: $border--size * -1;
+    } 
+}
+// left position
+// 
+@else if $pop--position == 'left' {
+    left: $pop--gap;
+    transform: translateX(-100%) translateY(-50%);
+    top: 50%;
+    &::before{
+        position: absolute;
+        border: {
+            top: $border--size solid transparent;
+            right: $border--size solid transparent;
+            left: $border--size solid $pop-bg;
+            bottom: $border--size solid transparent;
+        };
+        right: $border--size * -1;
+        top: 50%;
+        transform: translateY(-50%);
+        content: '';
+        margin-right: $border--size * -1;
+    } 
+}
+// right position
+// 
+@else if $pop--position == 'right' {
+    right: $pop--gap;
+    transform: translateX(100%) translateY(-50%);
+    top: 50%;
+    &::before{
+        position: absolute;
+        border: {
+            top: $border--size solid transparent;
+            left: $border--size solid transparent;
+            right: $border--size solid $pop-bg;
+            bottom: $border--size solid transparent;
+        };
+        left: $border--size * -1;
+        top: 50%;
+        transform: translateY(-50%);
+        content: '';
+        margin-left: $border--size * -1;
+    } 
+}
+// set the display to none if the input not valid
+// 
+@else {
+    &{
+        display: none;
+    }
+}
+}
+
+// background image center
+// 
+@mixin center-bg() {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+// active icons effect
+// 
+@mixin actIcon($w, $bg) {
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    justify-content: center;
+    transition: background-color .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+    width: $w;
+    height: $w;
+    &:hover {
+        background-color: $bg;
+    }
+}
+
+// DROP DOWN MENU
+@mixin drop($dir,$align,$y,$wrap) {
+    position: absolute;
+    min-width: 10rem;
+    background-color: #fff;
+    transform: translateY($y);
+    padding: .5rem 0 !important;
+    border: 1px solid rgb(228, 228, 228) !important;
+    border-radius: .25rem;
+    z-index: 1000 !important;
+    display: none;
+    transition: max-height 1s linear !important;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.05);
+    .main--drop-item {
+        padding: .5rem 1rem;
+        font-size: $font-medium;
+        transition: .2s;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover {
+            background-color: #e5e5e5;
+        }
+    }
+    @if $dir == 'left'{
+        left: 0;
+    }@else if $dir == 'right' {right: 0;}
+    @if $align == 'center' {
+        text-align: center;
+    }@else if $align == 'left' {
+        text-align: left;
+    }
+    &.active {
+        display: block;
+    }
+    @if $wrap == true {
+        white-space: nowrap !important;
+    }@else if $wrap == false {
+        white-space: none;
+    }
+}
+

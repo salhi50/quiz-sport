@@ -314,7 +314,7 @@ function checkAnswer(curr, inpts) {
     // If the answer is correct
     if(checkAnswer) {
         numRightAns++;
-        activeSoundEffect('/sounds/right.mp3');
+        activeSoundEffect('sounds/right.mp3');
         showAnswerCheckMsg('correct-answer-msg');
         inpts.filter(e => e.checked).forEach(one => {
             one.parentElement.classList.add('true');
@@ -322,7 +322,7 @@ function checkAnswer(curr, inpts) {
     //  Wrong answer
     }else {
         numWrongAns++;
-        activeSoundEffect('/sounds/wrong.mp3');
+        activeSoundEffect('sounds/wrong.mp3');
         showAnswerCheckMsg('wrong-answer-msg');
         // get right answers
         let rightAns = inpts.filter(e => {
@@ -1042,4 +1042,15 @@ if(targetCategorieStages.length) {
     for(let i = 0; i < 9; i++) {
         targetCategorie.stages[i].quizs = targetCategorieStages[0][`stage${i+1}`];
     }
+}
+
+// Fix imgs path
+
+let stgs = targetCategorie.stages
+
+for(let i = 0; i < stgs.length; i++) {
+    let stg = stgs[i];
+    stg.quizs.forEach((e => {
+        if(e.imgPath) e.imgPath = e.imgPath.slice(1);
+    }))
 }
